@@ -3,26 +3,26 @@
 <%@ include file="../layout/header.jsp"%>
 
 <div class="container">
-	<form>
-		<div class="form-group">
-			<label for="title">Title</label> 
-			<input type="text" class="form-control" placeholder="Enter title" id="title">
-		</div>
-
-		<div class="form-group">
-			<label for="content">Content:</label>
-			<textarea class="form-control summernote" rows="5" id="content"></textarea>
-		</div>
-	</form>
-	<button id="btn-save" class="btn btn-primary">글쓰기 완료</button>
+	<button class="btn btn-secondary" onclick="history.back()">돌아가기</button>
+	<button id="btn-update" class="btn btn-warning">수정</button>
+	<button id="btn-delete" class="btn btn-danger">삭제</button>
+	<br><br>
+	<div>
+		글 번호: <span id="id"><i>${board.id }</i></span>
+		작성자: <span><i>${board.user.username}</i></span>
+	</div>
+	<br>
+	<div>
+		<h3>${board.title }</h3>
+	</div>
+	<hr>
+	<div>
+		<div>${board.content }</div>
+	</div>
+	<hr>
 </div>
 
-<script>
-	$('.summernote').summernote({
-		tabsize : 2,
-		height : 300
-	});
-</script>
+
 
 <script type="text/javascript">
 let index = {
