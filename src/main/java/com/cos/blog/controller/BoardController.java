@@ -10,4 +10,10 @@ public class BoardController {
 	public String index() {
 		return "index";
 	}
+	
+	//User 권한이 필요
+	@GetMapping("/board/saveForm")
+	public String saveForm() {
+		return "board/saveForm";
+	}
 }
