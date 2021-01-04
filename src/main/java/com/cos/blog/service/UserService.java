@@ -2,6 +2,10 @@ package com.cos.blog.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +23,9 @@ public class UserService {
 	
 	@Autowired
 	private BCryptPasswordEncoder encoder;
+	
+	@Autowired
+	private AuthenticationManager authenticationManager;
 	
 	@Transactional
 	public void 회원가입(User user) {
@@ -41,6 +48,10 @@ public class UserService {
 		String encPassword = encoder.encode(rawPassword);
 		persistance.setPassword(encPassword);
 		persistance.setEmail(user.getEmail());
+		
+		//세션 등록
+		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())); 
+		SecurityContextHolder.getContext().setAuthentication(authentication);
 		//회원수정 함수 종료시 = 서비스 종료 = 트랜잭선 종료 = commit이 자동으로 됨
 	}
 	
